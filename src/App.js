@@ -1,20 +1,28 @@
+import react from "react";
+import TodoList from "./components/TodoList";
+import NewTodoForm from "./components/NewTodoForm";
+import { useState } from "react";
+import { addTodo } from "./store/todoSlice";
+import { useDispatch } from "react-redux";
 function App() {
+  const [text, setText] = useState("");
+  const dispatch = useDispatch();
+
+  const handleAction = () => {
+    if (text.trim().length) {
+      dispatch(addTodo({ text }));
+      setText("");
+    }
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NewTodoForm
+        value={text}
+        updateText={setText}
+        handleAction={handleAction}
+      />
+      <TodoList />
     </div>
   );
 }
