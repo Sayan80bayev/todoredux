@@ -3,11 +3,11 @@ import TodoList from "./components/TodoList";
 import NewTodoForm from "./components/NewTodoForm";
 import { useState, useEffect } from "react";
 import { addTodo, fetchTodos } from "./store/todoSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 function App() {
   const [text, setText] = useState("");
   const dispatch = useDispatch();
-
+  const { status, error } = useSelector((state) => state.todos);
   const handleAction = () => {
     if (text.trim().length) {
       dispatch(addTodo({ text }));
@@ -24,6 +24,8 @@ function App() {
         updateText={setText}
         handleAction={handleAction}
       />
+      {status === "loding" && <h4>Loading...</h4>}
+      {error && <h4>{error}</h4>}
       <TodoList />
     </div>
   );
