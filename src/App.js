@@ -24,7 +24,7 @@ function App() {
         updateText={setText}
         handleAction={handleAction}
       />
-      {status === "loding" && <h4>Loading...</h4>}
+      {status === "loading" && <h4>Loading...</h4>}
       {error && <h4>{error}</h4>}
       <TodoList />
     </div>

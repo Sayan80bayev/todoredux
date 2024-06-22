@@ -55,7 +55,7 @@ const todoSlice = createSlice({
       })
       .addCase(fetchTodos.rejected, (state, action) => {
         state.status = "rejected";
-        state.error = action.error.message;
+        state.error = action.payload;
       });
   },
 });
