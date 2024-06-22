@@ -1,8 +1,8 @@
 import react from "react";
 import TodoList from "./components/TodoList";
 import NewTodoForm from "./components/NewTodoForm";
-import { useState } from "react";
-import { addTodo } from "./store/todoSlice";
+import { useState, useEffect } from "react";
+import { addTodo, fetchTodos } from "./store/todoSlice";
 import { useDispatch } from "react-redux";
 function App() {
   const [text, setText] = useState("");
@@ -14,7 +14,9 @@ function App() {
       setText("");
     }
   };
-
+  useEffect(() => {
+    dispatch(fetchTodos());
+  }, [dispatch]);
   return (
     <div className="App">
       <NewTodoForm
