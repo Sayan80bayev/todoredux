@@ -1,20 +1,22 @@
 import react from "react";
 import TodoList from "./components/TodoList";
 import NewTodoForm from "./components/NewTodoForm";
-import { useState } from "react";
-import { addTodo } from "./store/todoSlice";
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { addTodo, fetchTodos } from "./store/todoSlice";
+import { useDispatch, useSelector } from "react-redux";
 function App() {
   const [text, setText] = useState("");
   const dispatch = useDispatch();
-
+  const { status, error } = useSelector((state) => state.todos);
   const handleAction = () => {
     if (text.trim().length) {
       dispatch(addTodo({ text }));
       setText("");
     }
   };
-
+  useEffect(() => {
+    dispatch(fetchTodos());
+  }, [dispatch]);
   return (
     <div className="App">
       <NewTodoForm
@@ -22,6 +24,8 @@ function App() {
         updateText={setText}
         handleAction={handleAction}
       />
+      {status === "loading" && <h4>Loading...</h4>}
+      {error && <h4>{error}</h4>}
       <TodoList />
     </div>
   );
